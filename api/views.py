@@ -47,10 +47,11 @@ class RouteplannerView(APIView):
         # Convert result to dict
         result_dict = asdict(result)
 
-        # Add map URL
+        # Add map URL (URL-encode spaces as + for valid links)
+        from urllib.parse import quote
         result_dict['map_url'] = (
             f"{request.build_absolute_uri('/api/route/map/')}?"
-            f"start={start}&end={end}"
+            f"start={quote(start)}&end={quote(end)}"
         )
 
         # Serialize response
